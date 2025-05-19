@@ -1,9 +1,13 @@
 package Yahya.Ghallali.Entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,4 +24,8 @@ public class Client {
     private Long id;
     private String nom;
     private String email;
+
+    @OneToMany(mappedBy = "client")
+    @Builder.Default
+    private List<Credit> credits = new ArrayList<>();
 }
