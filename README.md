@@ -328,6 +328,62 @@ public interface CreditImmobilierMapper {
 }
 ```
 
+### Services
+```java
+public interface ClientService {
+    List<ClientDTO> findAll();
+    ClientDTO findById(Long id);
+    ClientDTO save(ClientDTO clientDTO);
+    void delete(Long id);
+}
+```
+
+```java
+public interface CreditService {
+    List<CreditDTO> findAll();
+    CreditDTO findById(Long id);
+    CreditDTO save(CreditDTO creditDTO);
+    void delete(Long id);
+}
+```
+
+```java
+public interface CreditPersonnelService {
+    List<CreditPersonnelDTO> findAll();
+    CreditPersonnelDTO findById(Long id);
+    CreditPersonnelDTO save(CreditPersonnelDTO creditPersonnelDTO);
+    void delete(Long id);
+}
+```
+
+```java
+public interface CreditImmobilierService {
+    List<CreditImmobilierDTO> findAll();
+    CreditImmobilierDTO findById(Long id);
+    CreditImmobilierDTO save(CreditImmobilierDTO creditImmobilierDTO);
+    void delete(Long id);
+}
+```
+
+```java
+public interface CreditProfessionnelService {
+    List<CreditProfessionnelDTO> findAll();
+    CreditProfessionnelDTO findById(Long id);
+    CreditProfessionnelDTO save(CreditProfessionnelDTO creditProfessionnelDTO);
+    void delete(Long id);
+}
+```
+
+```java
+public interface RemboursementService {
+    List<RemboursementDTO> findAll();
+    RemboursementDTO findById(Long id);
+    RemboursementDTO save(RemboursementDTO remboursementDTO);
+    void delete(Long id);
+}
+```
+
+
 ## REST Controllers
 
 ```java
