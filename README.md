@@ -221,3 +221,70 @@ public interface CreditImmobilierRepository extends JpaRepository<CreditImmobili
 public interface RemboursementRepository extends JpaRepository<Remboursement, Long> {
 }
 ```
+
+## Couche Service
+### DTO
+
+```java
+@Data
+public abstract class CreditDTO {
+    private Long id;
+    private Date dateDemande;
+    private Status statut;
+    private Date dateAcceptation;
+    private Double montant;
+    private Integer dureeRemboursement;
+    private Double tauxInteret;
+
+    private List<RemboursementDTO> remboursements;
+}
+```
+
+```java
+@Data
+@Builder
+public class ClientDTO {
+    private Long id;
+    private String nom;
+    private String email;
+
+    private List<CreditDTO> credits;
+}
+```
+
+```java
+@Data
+@Builder
+public class RemboursementDTO {
+    private Long id;
+    private Date date;
+    private Double montant;
+    private Type type;
+}
+```
+
+```java
+@Data
+@Builder
+public class CreditPersonnelDTO extends CreditDTO {
+    private String motif;
+}
+```
+
+```java
+@Data
+@Builder
+public class CreditImmobilierDTO extends CreditDTO {
+    private Bien typeBien;
+}
+```
+
+```java
+@Data
+@Builder
+public class CreditProfessionelDTO extends CreditDTO {
+    private String motif;
+    private String raisonSociale;
+}
+```
+### REST Controllers

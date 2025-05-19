@@ -1,10 +1,14 @@
 package Yahya.Ghallali.DTO;
 
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Data
-@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@SuperBuilder
 public class CreditPersonnelDTO extends CreditDTO {
     private String motif;
 }
