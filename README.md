@@ -329,3 +329,42 @@ public interface CreditImmobilierMapper {
 ```
 
 ## REST Controllers
+
+```java
+@RestController
+@RequestMapping("/client")
+@AllArgsConstructor
+@CrossOrigin("*")
+public class ClientController {
+
+    private ClientService clientService;
+
+    @GetMapping
+    public List<ClientDTO> findAll() {
+        return clientService.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public ClientDTO findById(@PathVariable Long id) {
+        return clientService.findById(id);
+    }
+
+    @PostMapping
+    public ClientDTO save(@RequestBody ClientDTO clientDTO) {
+        return clientService.save(clientDTO);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        clientService.delete(id);
+    }
+    
+}
+
+```
+
+
+### Swagger
+
+#### Client
+![SwaggerClient](./Images/image.png)
