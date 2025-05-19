@@ -3,15 +3,15 @@ package Yahya.Ghallali.Entities;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@SuperBuilder
 @DiscriminatorValue("CreditPersonnel")
 public class CreditPersonnel extends Credit {
     private String motif;

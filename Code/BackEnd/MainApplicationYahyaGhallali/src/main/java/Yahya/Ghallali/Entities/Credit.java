@@ -18,15 +18,15 @@ import jakarta.persistence.InheritanceType;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-// @Builder
+@SuperBuilder
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type", discriminatorType = DiscriminatorType.STRING, length = 20)
 public abstract class Credit {
@@ -45,6 +45,6 @@ public abstract class Credit {
     private Client client;
 
     @OneToMany(mappedBy = "credit")
-    // @Builder.Default
+    @lombok.Builder.Default
     private List<Remboursement> remboursements = new ArrayList<>();
 }
