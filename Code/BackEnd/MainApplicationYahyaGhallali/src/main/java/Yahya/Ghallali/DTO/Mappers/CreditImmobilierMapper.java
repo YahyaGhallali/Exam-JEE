@@ -7,6 +7,7 @@ import Yahya.Ghallali.Entities.CreditImmobilier;
 
 @Mapper(componentModel = "spring")
 public interface CreditImmobilierMapper {
+    // @Mapping(target = "remboursements", ignore = true)
     CreditImmobilierDTO toDTO(CreditImmobilier creditImmobilier);
     CreditImmobilier toEntity(CreditImmobilierDTO creditImmobilierDTO);
 }

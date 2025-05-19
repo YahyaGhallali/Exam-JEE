@@ -14,15 +14,17 @@ import Yahya.Ghallali.Entities.Credit;
 import Yahya.Ghallali.Entities.CreditImmobilier;
 import Yahya.Ghallali.Entities.CreditPersonnel;
 import Yahya.Ghallali.Entities.CreditProfessionnel;
+import Yahya.Ghallali.Entities.Remboursement;
 import Yahya.Ghallali.Entities.ENUMS.Bien;
 import Yahya.Ghallali.Entities.ENUMS.Status;
+import Yahya.Ghallali.Entities.ENUMS.Type;
 import Yahya.Ghallali.Repositories.*;
-
+import Yahya.Ghallali.Services.Implementations.ClientServiceImpl;
 import Yahya.Ghallali.Repositories.CreditImmobilierRepository;
 import lombok.AllArgsConstructor;
 
 @SpringBootApplication
-// @AllArgsConstructor
+@AllArgsConstructor
 public class GhallaliApplication {
 
 	public static void main(String[] args) {
@@ -69,6 +71,7 @@ public class GhallaliApplication {
 						.dureeRemboursement(12)
 						.tauxInteret(0.05)
 						.typeBien(Bien.Appartement)
+						.client(clients.get(2))
 						.build();
 
 				creditImmobilierRepository.save(credit);
@@ -92,6 +95,7 @@ public class GhallaliApplication {
 						.dateAcceptation(new Date(System.currentTimeMillis()))
 						.motif("Motif " + type)
 						.raisonSociale("Raison Sociale " + type)
+						.client(clients.get(1))
 						.build();
 
 				creditProfessionnelRepository.save(credit);
@@ -120,10 +124,10 @@ public class GhallaliApplication {
 
 			System.out.println("Liste des crédits professionnels après suppression: ");
 			creditProfessionnels = creditProfessionnelRepository.findAll();
-			
-			
+
 			System.out.println("Ajout d'un nouveau crédit pour un client");
 			Client client = clientRepository.findById(1L).orElseThrow(() -> new RuntimeException("Client non trouvé"));
+
 			CreditImmobilier creditImmobilier = CreditImmobilier.builder()
 					.dateDemande(new Date(System.currentTimeMillis()))
 					.statut(Status.Accepted)
@@ -132,8 +136,8 @@ public class GhallaliApplication {
 					.dureeRemboursement(12)
 					.tauxInteret(0.05)
 					.typeBien(Bien.Appartement)
+					.client(client)
 					.build();
-					
 
 			CreditPersonnel creditPersonnel = CreditPersonnel.builder()
 					.dateDemande(new Date(System.currentTimeMillis()))
@@ -143,18 +147,43 @@ public class GhallaliApplication {
 					.dureeRemboursement(12)
 					.tauxInteret(0.05)
 					.motif("Motif :" + "Credit Personnel")
+					.client(client)
 					.build();
+
 
 			creditPersonnelRepository.save(creditPersonnel);
 			creditImmobilierRepository.save(creditImmobilier);
 
-			client.getCredits().add(creditImmobilier);
-			client.getCredits().add(creditPersonnel);
+			Remboursement remboursementPersonnel = Remboursement.builder()
+					.date(new Date(System.currentTimeMillis()))
+					.credit(creditPersonnel)
+					.type(Type.Anticipe)
+					.montant(10000.0)
+					.build();
 
+			Remboursement remboursementImmobilier = Remboursement.builder()
+					.date(new Date(System.currentTimeMillis()))
+					.credit(creditImmobilier)
+					.montant(10000.0)
+					.type(Type.Mensualite)
+					.build();
+
+			remboursementRepository.save(remboursementPersonnel);
+			remboursementRepository.save(remboursementImmobilier);
+
+			creditImmobilier.getRemboursements().add(remboursementImmobilier);
+			creditPersonnel.getRemboursements().add(remboursementPersonnel);	
+
+			
+			creditPersonnelRepository.save(creditPersonnel);
+			creditImmobilierRepository.save(creditImmobilier);
+
+			
 			clientRepository.save(client);
 
 			System.out.println("Liste des crédits du client 1 après ajout: ");
-			Client clientCredite = clientRepository.findById(1L).orElseThrow(() -> new RuntimeException("Client non trouvé"));
+			Client clientCredite = clientRepository.findById(1L)
+					.orElseThrow(() -> new RuntimeException("Client non trouvé"));
 
 			List<Credit> credits = clientCredite.getCredits();
 			credits.forEach(c -> {
@@ -171,8 +200,29 @@ public class GhallaliApplication {
 				}
 				System.out.println("--------------------------------");
 			});
-					
+
 		};
 	}
 
+	@Bean
+	CommandLineRunner clientService(ClientRepository clientRepository) {
+		return args -> {
+			System.out.println("Application ClientService");
+			List<Client> clients = clientRepository.findAll();
+			clients.forEach(client -> {
+				System.out.println("--------------------------------");
+				System.out.println("ID: " + client.getId());
+				System.out.println("Nom: " + client.getNom());
+				List<Credit> credits = client.getCredits();
+				credits.forEach(credit -> {
+					System.out.println("--------------------------------");
+					System.out.println("ID: " + credit.getId());
+					System.out.println("Type de Crédit: " + credit.getClass().getSimpleName());
+					System.out.println("--------------------------------");
+				});
+				System.out.println("--------------------------------");
+			});
+
+		};
+	}
 }

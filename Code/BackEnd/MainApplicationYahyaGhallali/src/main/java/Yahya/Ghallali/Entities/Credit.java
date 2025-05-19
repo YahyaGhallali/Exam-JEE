@@ -10,6 +10,7 @@ import jakarta.persistence.DiscriminatorType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -44,7 +45,7 @@ public abstract class Credit {
     @ManyToOne
     private Client client;
 
-    @OneToMany(mappedBy = "credit")
+    @OneToMany(mappedBy = "credit", fetch = FetchType.EAGER)
     @lombok.Builder.Default
     private List<Remboursement> remboursements = new ArrayList<>();
 }

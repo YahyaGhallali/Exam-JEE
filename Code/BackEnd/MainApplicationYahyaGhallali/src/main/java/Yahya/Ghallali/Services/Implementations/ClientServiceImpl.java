@@ -10,14 +10,14 @@ import Yahya.Ghallali.DTO.Mappers.ClientMapper;
 import Yahya.Ghallali.Entities.Client;
 import Yahya.Ghallali.Repositories.ClientRepository;
 import Yahya.Ghallali.Services.Ints.ClientService;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class ClientServiceImpl implements ClientService {
     
-    private final ClientRepository clientRepository;
-    private final ClientMapper clientMapper;
+    private ClientRepository clientRepository;
+    private ClientMapper clientMapper;
     
     @Override
     public List<ClientDTO> findAll() {

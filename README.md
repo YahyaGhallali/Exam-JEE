@@ -287,4 +287,42 @@ public class CreditProfessionelDTO extends CreditDTO {
     private String raisonSociale;
 }
 ```
-### REST Controllers
+
+### Mappers
+
+```java
+@Mapper(componentModel = "spring", uses = {RemboursementMapper.class})
+public interface CreditMapper {
+    @Mapping(target = "remboursements", source = "remboursements")
+    CreditDTO toDTO(Credit credit);
+    // @Mapping(target = "remboursements", ignore = true)
+    // Credit toEntity(CreditDTO creditDTO);
+}
+```
+
+```java
+@Mapper(componentModel = "spring", uses = {CreditMapper.class})
+public interface ClientMapper {
+    @Mapping(target = "creditsDtos", source = "credits")
+    ClientDTO toDTO(Client client);
+    Client toEntity(ClientDTO clientDTO);
+}
+```
+
+```java
+@Mapper(componentModel = "spring")
+public interface RemboursementMapper {
+    RemboursementDTO toDTO(Remboursement remboursement);
+    Remboursement toEntity(RemboursementDTO remboursementDTO);
+}
+```
+
+```java
+@Mapper(componentModel = "spring")
+public interface CreditImmobilierMapper {
+    CreditImmobilierDTO toDTO(CreditImmobilier creditImmobilier);
+    CreditImmobilier toEntity(CreditImmobilierDTO creditImmobilierDTO);
+}
+```
+
+## REST Controllers
