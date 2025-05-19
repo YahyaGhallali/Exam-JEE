@@ -10,6 +10,7 @@ import Yahya.Ghallali.Entities.Credit;
 public interface CreditMapper {
     @Mapping(target = "remboursements", source = "remboursements")
     CreditDTO toDTO(Credit credit);
+
     // @Mapping(target = "remboursements", ignore = true)
     // Credit toEntity(CreditDTO creditDTO);
 }

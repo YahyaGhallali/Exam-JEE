@@ -305,6 +305,8 @@ public interface CreditMapper {
 public interface ClientMapper {
     @Mapping(target = "creditsDtos", source = "credits")
     ClientDTO toDTO(Client client);
+    
+    @Mapping(target = "credits", ignore = true)
     Client toEntity(ClientDTO clientDTO);
 }
 ```
@@ -320,6 +322,7 @@ public interface RemboursementMapper {
 ```java
 @Mapper(componentModel = "spring")
 public interface CreditImmobilierMapper {
+    // @Mapping(target = "remboursements", ignore = true)
     CreditImmobilierDTO toDTO(CreditImmobilier creditImmobilier);
     CreditImmobilier toEntity(CreditImmobilierDTO creditImmobilierDTO);
 }
